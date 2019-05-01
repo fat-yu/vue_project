@@ -1,0 +1,23 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+.header {
+    width: 100vw;
+    height: 60px;
+    background-color: #409EFF;
+    color: #fff;
+    line-height: 60px;
+}
+.el-main {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+}
+.menu-box {
+    width: 250px;
+    height: calc(100vh - 60px);
+    border-right: 1px solid #e6e6e6;
+}
