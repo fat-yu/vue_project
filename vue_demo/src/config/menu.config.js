@@ -1,6 +1,7 @@
 module.exports = [{
   name: '基础',
   id: 'basic',
+  icon: 'el-icon-s-data',
   sub: [{
     name: 'Layout 布局',
     componentName: 'BasicLayout'
@@ -11,6 +12,7 @@ module.exports = [{
 }, {
   name: 'Form',
   id: 'form',
+  icon: 'el-icon-folder-opened',
   sub: [{
     name: 'Radio 单选框',
     componentName: 'FormRadio'

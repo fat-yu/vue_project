@@ -1,7 +1,8 @@
 <template>
-    <el-menu @open="openHandler" @close="closeHandler" unique-opened collapse-transition>
+    <el-menu @open="openHandler" @close="closeHandler" unique-opened collapse-transition router :collapse="isCollapse">
         <el-submenu v-for="item in menu" :index="item.id" :key="item.id">
             <template slot="title">
+                <i :class="item.icon"></i>
                 <span v-text="item.name"></span>
             </template>
             <el-menu-item-group class="menu-hide" v-for="sub in item.sub" :key="sub.componentName">
@@ -14,8 +15,11 @@
 <script scoped>
 import menu from '@/config/menu.config.js'
 import '@/assets/css/menu.css'
+
 export default {
+  props: ['isCollapse'],
   data () {
+    this.$emit('isCollapse', this.isCollapse)
     return {
       menu: menu
     }
@@ -26,6 +30,9 @@ export default {
     },
     closeHandler: function (key, keyPath) {
       console.info(key, keyPath)
+    },
+    clickme: function (a) {
+      console.info(a)
     }
   }
 }
