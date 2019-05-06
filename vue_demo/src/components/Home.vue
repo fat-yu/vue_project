@@ -1,25 +1,66 @@
 <template>
-    <div id="home">
-      <span>{{test}}</span>
+    <div>
+      <el-row>
+          <el-button icon="el-icon-edit" round>圆角按钮</el-button>
+          <el-button type="primary" round>主要按钮</el-button>
+          <el-button type="success" round>成功按钮</el-button>
+          <el-button type="info" round>信息按钮</el-button>
+          <el-button type="warning" round>警告按钮</el-button>
+          <el-button type="danger" round>危险按钮</el-button>
+      </el-row>
+      <el-row class="margin-t">
+          <el-button icon="el-icon-search" circle></el-button>
+          <el-button type="primary" icon="el-icon-edit" circle></el-button>
+          <el-button type="success" icon="el-icon-check" circle></el-button>
+          <el-button type="info" icon="el-icon-message" circle></el-button>
+          <el-button type="warning" icon="el-icon-star-off" circle></el-button>
+          <el-button type="danger" icon="el-icon-delete" circle></el-button>
+      </el-row>
+      <el-row class="margin-t">
+          <el-button plain>朴素按钮</el-button>
+          <el-button type="primary" plain>主要按钮</el-button>
+          <el-button type="success" plain>成功按钮</el-button>
+          <el-button type="info" plain>信息按钮</el-button>
+          <el-button type="warning" plain>警告按钮</el-button>
+          <el-button type="danger" plain>危险按钮</el-button>
+      </el-row>
+      <el-row class="margin-t">
+          <el-button>默认按钮</el-button>
+          <el-button type="primary">主要按钮</el-button>
+          <el-button type="success">成功按钮</el-button>
+          <el-button type="info">信息按钮</el-button>
+          <el-button type="warning">警告按钮</el-button>
+          <el-button type="danger">危险按钮</el-button>
+      </el-row>
+      <el-row class="margin-t">
+          <el-button type="primary" @click="openDialog">打开Dialog组件</el-button>
+      </el-row>
+      <yDialog :dialogVisible="dialogVisible" dialogTitle="人员选择" v-on:isClosed="isClosed($event)"></yDialog>
     </div>
 </template>
-<script>
+<script scoped>
+import '@/assets/css/demo.css'
+import yDialog from '@/components/Dialog4List.vue'
 export default {
-  name: 'home',
   data () {
     return {
-      test: 'home'
+      test: 'home',
+      dialogVisible: false
     }
   },
   mounted () {
     this.test = 'modify home'
-    $('#home').click(function () {
-      // 写一个alert的组件
-      alert('home')
-    })
   },
   methods: {
-
+    openDialog () {
+      this.dialogVisible = true
+    },
+    isClosed ($event) {
+      this.dialogVisible = $event
+    }
+  },
+  components: {
+    yDialog: yDialog
   }
 }
 </script>
