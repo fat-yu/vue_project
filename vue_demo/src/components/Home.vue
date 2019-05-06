@@ -35,7 +35,7 @@
       <el-row class="margin-t">
           <el-button type="primary" @click="openDialog">打开Dialog组件</el-button>
       </el-row>
-      <yDialog :dialogVisible="dialogVisible" dialogTitle="人员选择" v-on:isClosed="isClosed($event)"></yDialog>
+      <yDialog :dialogVisible="dialogVisible" dialogTitle="人员选择" :dataList="dataList" v-on:isClosed="isClosed($event)" v-on:returnSelectionData="returnSelectionData($event)"></yDialog>
     </div>
 </template>
 <script scoped>
@@ -45,7 +45,50 @@ export default {
   data () {
     return {
       test: 'home',
-      dialogVisible: false
+      dialogVisible: false,
+      dataList: [{
+        id: '12987122',
+        name: '王小虎',
+        amount1: '234',
+        amount2: '3.2',
+        amount3: 10
+      }, {
+        id: '12987123',
+        name: '王小虎',
+        amount1: '165',
+        amount2: '4.43',
+        amount3: 12
+      }, {
+        id: '12987124',
+        name: '王小虎',
+        amount1: '324',
+        amount2: '1.9',
+        amount3: 9
+      }, {
+        id: '12987124',
+        name: '王小虎',
+        amount1: '324',
+        amount2: '1.9',
+        amount3: 9
+      }, {
+        id: '12987124',
+        name: '王小虎',
+        amount1: '324',
+        amount2: '1.9',
+        amount3: 9
+      }, {
+        id: '12987125',
+        name: '王小虎',
+        amount1: '621',
+        amount2: '2.2',
+        amount3: 17
+      }, {
+        id: '12987126',
+        name: '王小虎',
+        amount1: '539',
+        amount2: '4.1',
+        amount3: 15
+      }]
     }
   },
   mounted () {
@@ -57,6 +100,9 @@ export default {
     },
     isClosed ($event) {
       this.dialogVisible = $event
+    },
+    returnSelectionData (dataList) {
+      console.info(dataList)
     }
   },
   components: {
