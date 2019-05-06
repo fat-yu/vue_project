@@ -22,7 +22,6 @@ import '@/assets/css/index.css'
 import vmenu from '@/components/Menu.vue'
 import BasicInfo from '@/config/basic.config.js'
 
-// var isCollapse = false
 export default {
   name: 'app',
   data () {
