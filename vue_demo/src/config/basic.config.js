@@ -1,3 +1,3 @@
 module.exports = {
-  sysName: '管理系统'
+  sysName: '教务管理系统'
 }

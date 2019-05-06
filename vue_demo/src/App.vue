@@ -2,11 +2,11 @@
   <div id="app">
     <el-container>
       <el-header class="header">
-        <i class="el-icon-s-fold iscollapse" @click="collapseHandler" ref="vmenu"></i>
+        <i class="el-icon-s-fold iscollapse index-switch" @click="collapseHandler"></i>
         <span>{{basicInfo.sysName}}</span>
       </el-header>
       <el-container>
-        <el-aside>
+        <el-aside style="width: auto;">
           <vmenu class="menu-box" :isCollapse="isCollapse"></vmenu>
         </el-aside>
         <el-main>
@@ -22,27 +22,27 @@ import '@/assets/css/index.css'
 import vmenu from '@/components/Menu.vue'
 import BasicInfo from '@/config/basic.config.js'
 
-var isCollapse = true
+// var isCollapse = false
 export default {
-  name: 'App',
+  name: 'app',
   data () {
-    isCollapse = true
     return {
       basicInfo: BasicInfo,
-      isCollapse: isCollapse
+      isCollapse: false
     }
   },
   components: {
     vmenu
   },
+  mounted () {
+    console.info(this.isCollapse)
+  },
   methods: {
-    collapseHandler: () => {
-      console.info(this)
-      this.$refs.vmenu.clickme(this.a.isCollapse)
-      if (this.a.isCollapse) {
-        this.a.isCollapse = false
+    collapseHandler () {
+      if (this.isCollapse) {
+        this.isCollapse = false
       } else {
-        this.a.isCollapse = true
+        this.isCollapse = true
       }
     }
   }

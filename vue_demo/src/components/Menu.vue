@@ -1,6 +1,10 @@
 <template>
-    <el-menu @open="openHandler" @close="closeHandler" unique-opened collapse-transition router :collapse="isCollapse">
-        <el-submenu v-for="item in menu" :index="item.id" :key="item.id">
+    <el-menu @open="openHandler" @close="closeHandler" unique-opened :collapse-transition="true" router :collapse="collapseFlag" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" default-active="Home">
+        <el-menu-item v-for="item in menu" :index="item.id" :key="item.id" v-if="item.sub === undefined">
+          <i :class="item.icon"></i>
+          <span slot="title" v-text="item.name"></span>
+        </el-menu-item>
+        <el-submenu v-for="item in menu" :index="item.id" :key="item.id" v-if="item.sub !== undefined">
             <template slot="title">
                 <i :class="item.icon"></i>
                 <span v-text="item.name"></span>
@@ -19,9 +23,9 @@ import '@/assets/css/menu.css'
 export default {
   props: ['isCollapse'],
   data () {
-    this.$emit('isCollapse', this.isCollapse)
     return {
-      menu: menu
+      menu: menu,
+      collapseFlag: this.isCollapse
     }
   },
   methods: {
@@ -33,6 +37,17 @@ export default {
     },
     clickme: function (a) {
       console.info(a)
+    }
+  },
+  mounted () {
+    this.collapseFlag = this.isCollapse
+  },
+  watch: {
+    isCollapse: {
+      immediate: true,
+      handler (val) {
+        this.collapseFlag = val
+      }
     }
   }
 }

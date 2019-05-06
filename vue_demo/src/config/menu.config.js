@@ -1,4 +1,8 @@
 module.exports = [{
+  name: '首页',
+  id: 'Home',
+  icon: 'el-icon-s-home'
+}, {
   name: '基础',
   id: 'basic',
   icon: 'el-icon-s-data',
@@ -19,5 +23,16 @@ module.exports = [{
   }, {
     name: 'Checkbox 多选框',
     componentName: 'FormCheckbox'
+  }]
+}, {
+  name: '数据展示',
+  id: 'data',
+  icon: 'el-icon-pie-chart',
+  sub: [{
+    name: 'Layout 布局',
+    componentName: 'BasicLayout'
+  }, {
+    name: 'Container 布局容器',
+    componentName: 'BasicContainer'
   }]
 }]

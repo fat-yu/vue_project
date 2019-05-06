@@ -3,20 +3,31 @@
     margin: 0;
     padding: 0;
 }
+.index-switch {
+    line-height: 60px;
+    padding-right: 16px;
+    font-size: 20px;
+}
 .header {
     width: 100vw;
     height: 60px;
-    background-color: #409EFF;
-    color: #fff;
+    background-color: #fff;
+    color: #333;
     line-height: 60px;
 }
 .iscollapse {
     cursor: pointer;
 }
+.cancel-default {
+    width: auto; /*取消aside默认宽度300*/
+}
 .el-menu {
     box-sizing: border-box;
 }
 .menu-box {
-    width: 300px;
+    width: 250px;
     height: calc(100vh - 60px);
+}
+.el-main{
+    background-color: #f3f3f3;
 }
