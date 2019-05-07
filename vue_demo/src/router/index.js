@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import menus from '@/config/menu.config.js'
+import Vuex from 'vuex'
 
-Vue.use(Router)
+Vue.use(Router, Vuex)
 const routes = []
 routes.push({
   path: '/',

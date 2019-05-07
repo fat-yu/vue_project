@@ -29,7 +29,7 @@ module.exports = [{
   id: 'data',
   icon: 'el-icon-pie-chart',
   sub: [{
-    name: 'Layout 布局',
+    name: '列表数据展示增删改查',
     componentName: 'BasicLayout'
   }, {
     name: 'Container 布局容器',
