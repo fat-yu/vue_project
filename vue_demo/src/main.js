@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import store from './store/store.js' // 实例化store
+import store from './store/index.js' // 实例化store
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

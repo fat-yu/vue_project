@@ -35,15 +35,22 @@
       <el-row class="margin-t">
           <el-button type="primary" @click="openDialog">打开Dialog组件</el-button>
       </el-row>
+      <el-row class="margin-t">
+          <el-button type="primary" @click="countApp">Vuex状态管理</el-button>
+          <span v-text="count"></span>
+      </el-row>
       <yDialog :dialogVisible="dialogVisible" dialogTitle="人员选择" :dataList="dataList" v-on:isClosed="isClosed($event)" v-on:returnSelectionData="returnSelectionData($event)"></yDialog>
     </div>
 </template>
 <script scoped>
 import '@/assets/css/demo.css'
 import yDialog from '@/components/Dialog4List.vue'
+import store from '@/store/index.js' // 实例化store
+
 export default {
   data () {
     return {
+      count: 0,
       test: 'home',
       dialogVisible: false,
       dataList: [{
@@ -103,6 +110,10 @@ export default {
     },
     returnSelectionData (dataList) {
       console.info(dataList)
+    },
+    countApp () {
+      this.$store.dispatch('add', 'dispatch分发到指定的actions')
+      this.count = store.state.count
     }
   },
   components: {
