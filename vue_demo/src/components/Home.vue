@@ -37,7 +37,12 @@
       </el-row>
       <el-row class="margin-t">
           <el-button type="primary" @click="countApp">Vuex状态管理</el-button>
-          <span v-text="count"></span>
+          <div v-text="count"></div>
+          <div>{{countCompulted}}</div>
+      </el-row>
+      <el-row class="margin-t">
+          <div>当前时间（计算属性）：{{now}}</div>
+          <div>当前时间（data）：{{now1}}</div>
       </el-row>
       <yDialog :dialogVisible="dialogVisible" dialogTitle="人员选择" :dataList="dataList" v-on:isClosed="isClosed($event)" v-on:returnSelectionData="returnSelectionData($event)"></yDialog>
     </div>
@@ -45,11 +50,11 @@
 <script scoped>
 import '@/assets/css/demo.css'
 import yDialog from '@/components/Dialog4List.vue'
-import store from '@/store/index.js' // 实例化store
 
 export default {
   data () {
     return {
+      now1: Date.now(),
       count: 0,
       test: 'home',
       dialogVisible: false,
@@ -113,11 +118,28 @@ export default {
     },
     countApp () {
       this.$store.dispatch('add', 'dispatch分发到指定的actions')
-      this.count = store.state.count
+      this.count = this.$store.state.count // 在main.js中已经将store注册给所有组件了
     }
   },
   components: {
     yDialog: yDialog
+  },
+  computed: {
+    now () { // 自定义变量，只有值变化时进行渲染
+      return Date.now()
+    },
+    countCompulted () {
+      return this.$store.state.count
+    }
+  },
+  watch: {
+    now1: {
+      immerdate: true,
+      handler (n, o) {
+        this.now1 = n
+      }
+    }
   }
+
 }
 </script>

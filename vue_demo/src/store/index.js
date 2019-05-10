@@ -6,7 +6,7 @@ import actions from './actions.js'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
-  strict: true,
+  strict: process.env.NODE_ENV !== 'production', // 不能再生产环境下启用严格模式
   state,
   mutations,
   actions
