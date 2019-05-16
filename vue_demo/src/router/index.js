@@ -1,3 +1,4 @@
+// vue-router 路由配置
 import Vue from 'vue'
 import Router from 'vue-router'
 import menus from '@/config/menu.config.js'
@@ -5,28 +6,51 @@ import Vuex from 'vuex'
 
 Vue.use(Router, Vuex)
 const routes = []
-routes.push({
-  path: '/',
-  name: 'Home',
-  component: () => import(`@/components/Home`)
-})
 
+// 单独用来处理登录的router
+const loginRouter = {
+  path: '/',
+  name: 'Login',
+  component: () => import(`@/components/login/login.vue`)
+}
+
+// 分模块设置路由，包含路由嵌套
+const appRouters = {
+  path: '/index',
+  name: 'Index',
+  meta: {
+    requireAuth: true // 用于判断是否需要登录
+  },
+  component: () => import(`@/components/Index`),
+  children: []
+}
+
+// 菜单数据
 menus.forEach((item) => {
   if (item.sub !== undefined) {
     item.sub.forEach((sub) => {
-      routes.push({
-        path: `/${sub.componentName}`,
+      appRouters.children.push({
+        path: `${sub.componentName}`,
         name: sub.componentName,
         component: () => import(`@/components/${sub.componentName}`)
       })
     })
   } else {
-    routes.push({
-      path: `/${item.id}`,
+    appRouters.children.push({
+      path: `${item.id}`,
       name: item.id,
       component: () => import(`@/components/${item.id}`)
     })
   }
 })
 
-export default new Router({ routes })
+// 将各个模块的路由放到routers暴露出去
+routes.push(appRouters)
+routes.push(loginRouter)
+
+const router = new Router({ routes })
+
+// 注册全局钩子,用于拦截请求
+router.beforeEach()
+
+export default router

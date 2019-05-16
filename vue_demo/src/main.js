@@ -9,7 +9,8 @@ import store from './store/index.js' // 实例化store
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-
+debugger
+console.info(router)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

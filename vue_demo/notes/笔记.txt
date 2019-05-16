@@ -1,0 +1,10 @@
+2019.05.16
+Vue 全局钩子函数：三大类钩子，两种函数
+    1. 全局钩子
+    2. 某路由钩子
+    3. 组件内钩子
+
+    1. Vue.beforeEach((to,from,next) => {}) // 跳转前执行
+    2. Vue.afterEach((to,from) => {}) // 在跳转之后判断
+
+router.beforeEach来实现拦截登陆，在需要拦截的router的meta中加入requireAuth，用来验证是否需要登录
