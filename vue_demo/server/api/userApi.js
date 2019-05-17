@@ -40,7 +40,7 @@ router.post('/addUser', (req, res) => {
     
 });
 
-//查找用户接口
+//查找用户接口,登录接口
 router.post('/selectUser', (req,res) => {
     var sql_name = $sql.user.select_name;
     var sql_password = $sql.user.select_password;
@@ -65,4 +65,5 @@ router.post('/selectUser', (req,res) => {
         }
     })
 });
+
 module.exports = router;

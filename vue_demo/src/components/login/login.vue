@@ -4,7 +4,7 @@
     <form>
       <input type="text" name="username" v-model="userName"> <br>
       <input type="text" name="age" v-model="age"> <br>
-      <a href="javascript:;" @click="addUser">提交</a>
+      <a href="javascript:;" @click="login">提交</a>
     </form>
   </div>
 </template>
@@ -20,10 +20,10 @@ export default {
     }
   },
   methods: {
-    addUser () {
+    login () {
       var name = this.userName
       var age = this.age
-      this.$http.post('/api/user/addUser', {
+      this.$axios.post('/api/user/selectUser', {
         username: name,
         age: age
       }, {}).then((response) => {

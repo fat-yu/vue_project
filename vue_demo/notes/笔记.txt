@@ -8,3 +8,12 @@ Vue 全局钩子函数：三大类钩子，两种函数
     2. Vue.afterEach((to,from) => {}) // 在跳转之后判断
 
 router.beforeEach来实现拦截登陆，在需要拦截的router的meta中加入requireAuth，用来验证是否需要登录
+
+2019.05.17
+全局引用axios，在main.js
+import axios from 'axios'
+Vue.prototype.$axios = axios
+
+启动node服务需要进入到项目的server文件夹下，执行node index
+
+axios.defaults.baseURL = 'http://localhost:3000/' // 设置baseURL后使用axios发送请求就不会是localhost:8080了

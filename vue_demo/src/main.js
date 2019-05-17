@@ -6,10 +6,14 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/index.js' // 实例化store
+import axios from 'axios'
 
+axios.defaults.baseURL = 'http://localhost:3000/' // 设置baseURL后使用axios发送请求就不会是localhost:8080了
+
+Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-debugger
+
 console.info(router)
 /* eslint-disable no-new */
 new Vue({
