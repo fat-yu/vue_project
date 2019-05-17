@@ -25,8 +25,8 @@ export default {
       var age = this.age
       this.$axios.post('/api/user/selectUser', {
         username: name,
-        age: age
-      }, {}).then((response) => {
+        password: age
+      }).then((response) => {
         console.log(response)
       })
     }

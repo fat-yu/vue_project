@@ -17,3 +17,6 @@ Vue.prototype.$axios = axios
 启动node服务需要进入到项目的server文件夹下，执行node index
 
 axios.defaults.baseURL = 'http://localhost:3000/' // 设置baseURL后使用axios发送请求就不会是localhost:8080了
+
+解决使用axios发送请求产生的跨域问题：
+在server（服务端）的index的中设置头信息，不足以解决问题，需要安装 npm install cors --save 才能生效
