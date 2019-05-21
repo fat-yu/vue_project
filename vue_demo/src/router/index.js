@@ -50,7 +50,19 @@ routes.push(loginRouter)
 
 const router = new Router({ routes })
 
+// 路由导航守卫
 // 注册全局钩子,用于拦截请求
-router.beforeEach()
+router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem('token')
+  if (to.path === '/') {
+    next()
+  } else {
+    if (token === '' || token === null) {
+      next('/')
+    } else {
+      next()
+    }
+  }
+})
 
 export default router

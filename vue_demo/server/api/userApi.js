@@ -1,12 +1,14 @@
-var models = require('../db');
-var express = require('express');
-var router = express.Router();
-var mysql = require('mysql');
-var $sql = require('../sqlMap');
+const models = require('../db');
+const express = require('express');
+const router = express.Router();
+const mysql = require('mysql');
+const $sql = require('../sqlMap');
+const jwtUtil = require('../../src/utils/jwt.js')
+
 // 连接数据库
-var conn = mysql.createConnection(models.mysql);
+const conn = mysql.createConnection(models.mysql);
 conn.connect();
-var jsonWrite = function(res, ret) {
+const jsonWrite = function(res, ret) {
     if(typeof ret === 'undefined') {
         res.send('err')
     } else {
@@ -16,9 +18,9 @@ var jsonWrite = function(res, ret) {
 };
 // 增加用户接口
 router.post('/addUser', (req, res) => {
-    var sql_name = $sql.user.select_name
-    var sql = $sql.user.add;
-    var params = req.body;
+    let sql_name = $sql.user.select_name
+    let sql = $sql.user.add;
+    let params = req.body;
     console.log(params);
     conn.query(sql_name,params.username,function(err,result) {
         if(err) {
@@ -40,29 +42,49 @@ router.post('/addUser', (req, res) => {
     
 });
 
-//查找用户接口,登录接口
-router.post('/selectUser', (req,res) => {
-    var sql_name = $sql.user.select_name;
-    var sql_password = $sql.user.select_password;
-    var params = req.body;
-    conn.query(sql_name,params.username,function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        if(result[0]===undefined) {
-            res.send('-1')    //查询不出username，data返回-1
-        }else {
-            conn.query(sql_password,params.password, function(err, result) {
-                if(err) {
-                    console.log(err)
+// 登录接口
+router.post('/login', (req,res) => {
+    let sql_name = $sql.user.select_name;
+    let sql_password = $sql.user.select_password;
+    let params = req.body;
+    new Promise((resolve, reject) => {
+        // 查询用户名
+        conn.query(sql_name, params.username, (err, result) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(result)
+            }
+        })
+    }).then((result) => {
+        if (result[0] === undefined) {
+            res.send({code: -1, msg: '账号不存在'})
+        } else {
+            new Promise ((resolve, reject) => {
+                conn.query(sql_password, params.password, function(err, result) {
+                   if (err) {
+                    reject(err)
+                   } else {
+                    resolve(result)
+                   }
+                })
+            }).then((result) => {
+                if (result[0] === undefined) {
+                    res.send({code: -2, msg: '密码错误'})
+                } else {
+                    // 登录成功, 添加token验证
+                    let _id = result[0].id
+                    let jwtObj = new jwtUtil(_id)
+                    let token = jwtObj.generateToken()
+                    console.info(token)
+                    res.send({code: 0, msg: '登录成功', token:token})
                 }
-                if(result[0]===undefined) {
-                    res.send('0')    //username正确后，password错误，data返回 0
-                }else {
-                    jsonWrite(res, result);
-                }
+            }).catch((err) => {
+                res.send({code: 1, msg: '账号密码错误'})
             })
         }
+    }).catch((err) => {
+        res.send({code: 1, msg: '账号密码错误'});
     })
 });
 

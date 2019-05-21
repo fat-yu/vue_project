@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'hello',
   data () {
@@ -20,14 +21,18 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setToken']),
     login () {
-      var name = this.userName
-      var age = this.age
-      this.$axios.post('/api/user/selectUser', {
+      const _this = this
+      const name = _this.userName
+      const age = _this.age
+      this.$axios.post('/api/user/login', {
         username: name,
         password: age
       }).then((response) => {
-        console.log(response)
+        console.info(1, response.data.token)
+        _this.setToken({ token: response.data.token })
+        this.$router.push('/index')
       })
     }
   }

@@ -4,22 +4,22 @@ export default {
   },
   decrement: state => state.count--,
   // 将token保存到sessionStorage里，token表示登陆状态
-  SET_TOKEN: (state, data) => {
-    state.token = data
-    window.sessionStorage.setItem('token', data)
+  setToken: (state, data) => {
+    state.token = data.token
+    localStorage.setItem('token', data.token)
   },
   // 获取用户名
-  GET_USER: (state, data) => {
+  getUser: (state, data) => {
     // 把用户名存起来
     state.user = data
-    window.sessionStorage.setItem('user', data)
+    localStorage.setItem('user', data)
   },
   // 登出
-  LOGOUT: (state) => {
+  logout: (state) => {
     // 登出的时候要清除token
     state.token = null
     state.user = null
-    window.sessionStorage.removeItem('token')
-    window.sessionStorage.removeItem('user')
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
   }
 }
