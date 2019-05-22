@@ -32,6 +32,10 @@ menus.forEach((item) => {
       appRouters.children.push({
         path: `${sub.componentName}`,
         name: sub.componentName,
+        redirect: '/',
+        meta: {
+          requireAuth: true
+        },
         component: () => import(`@/components/${sub.componentName}`)
       })
     })
@@ -39,6 +43,10 @@ menus.forEach((item) => {
     appRouters.children.push({
       path: `${item.id}`,
       name: item.id,
+      redirect: '/',
+      meta: {
+        requireAuth: true
+      },
       component: () => import(`@/components/${item.id}`)
     })
   }

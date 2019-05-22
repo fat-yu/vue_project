@@ -30,7 +30,7 @@ export default {
         username: name,
         password: age
       }).then((response) => {
-        console.info(1, response.data.token)
+        console.info(111, response.data.token)
         _this.setToken({ token: response.data.token })
         this.$router.push('/index')
       })

@@ -28,8 +28,10 @@ app.all('*', function (req, res, next) {
 
 // 服务端拦截所有需要验证身份信息的请求，并校验token的合法性
 app.use((req, res, next) => {
+    console.info(req)
     // 排除掉登录，注册的url
     if (req.url !== '/user/login' && req.url !== '/user/register') {
+        console.info('功能路径触发')
         // axios 发送请求的时候需要在头信息中带token
         let token = req.headers.token;
         let jwt = new JwtUtil(token);
@@ -40,9 +42,10 @@ app.use((req, res, next) => {
             res.send({status: 403, msg: '登录已过期,请重新登录'});
             // res.render('login.html');
         } else {
-            next();
+            next('/');
         }
     } else {
+        console.info('登录注册触发')
         next();
     }
 })

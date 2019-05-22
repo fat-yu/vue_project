@@ -76,7 +76,6 @@ router.post('/login', (req,res) => {
                     let _id = result[0].id
                     let jwtObj = new jwtUtil(_id)
                     let token = jwtObj.generateToken()
-                    console.info(token)
                     res.send({code: 0, msg: '登录成功', token:token})
                 }
             }).catch((err) => {

@@ -30,13 +30,13 @@ export default {
   },
   methods: {
     openHandler: function (key, keyPath) {
-      console.info(key, keyPath)
+      // console.info(key, keyPath)
     },
     closeHandler: function (key, keyPath) {
-      console.info(key, keyPath)
+      // console.info(key, keyPath)
     },
     clickme: function (a) {
-      console.info(a)
+      // console.info(a)
     }
   },
   mounted () {
