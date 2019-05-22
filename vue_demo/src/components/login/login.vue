@@ -30,9 +30,9 @@ export default {
         username: name,
         password: age
       }).then((response) => {
-        console.info(111, response.data.token)
         _this.setToken({ token: response.data.token })
-        this.$router.push('/index')
+        // 登录成功以后跳转框架页，同时加载首页
+        this.$router.push('/Home')
       })
     }
   }

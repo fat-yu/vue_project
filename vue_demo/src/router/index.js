@@ -9,14 +9,14 @@ const routes = []
 
 // 单独用来处理登录的router
 const loginRouter = {
-  path: '/',
+  path: '/login',
   name: 'Login',
   component: () => import(`@/components/login/login.vue`)
 }
 
 // 分模块设置路由，包含路由嵌套
 const appRouters = {
-  path: '/index',
+  path: '/',
   name: 'Index',
   meta: {
     requireAuth: true // 用于判断是否需要登录
@@ -32,7 +32,6 @@ menus.forEach((item) => {
       appRouters.children.push({
         path: `${sub.componentName}`,
         name: sub.componentName,
-        redirect: '/',
         meta: {
           requireAuth: true
         },
@@ -43,7 +42,6 @@ menus.forEach((item) => {
     appRouters.children.push({
       path: `${item.id}`,
       name: item.id,
-      redirect: '/',
       meta: {
         requireAuth: true
       },
@@ -56,17 +54,19 @@ menus.forEach((item) => {
 routes.push(appRouters)
 routes.push(loginRouter)
 
+console.info(routes)
 const router = new Router({ routes })
 
 // 路由导航守卫
 // 注册全局钩子,用于拦截请求
 router.beforeEach((to, from, next) => {
+  console.info(1, to)
   let token = localStorage.getItem('token')
-  if (to.path === '/') {
+  if (to.path === '/login') {
     next()
   } else {
     if (token === '' || token === null) {
-      next('/')
+      next('/login')
     } else {
       next()
     }

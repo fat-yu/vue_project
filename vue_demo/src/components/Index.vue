@@ -6,7 +6,7 @@
         <span>{{basicInfo.sysName}}</span>
       </el-header>
       <el-container>
-        <el-aside style="width: auto;">
+        <el-aside>
           <vmenu class="menu-box" :isCollapse="isCollapse"></vmenu>
         </el-aside>
         <el-main>
@@ -32,9 +32,6 @@ export default {
   },
   components: {
     vmenu
-  },
-  mounted () {
-    console.info(this.isCollapse)
   },
   methods: {
     collapseHandler () {

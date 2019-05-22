@@ -21,11 +21,13 @@
 .cancel-default {
     width: auto; /*取消aside默认宽度300*/
 }
+.el-aside{
+    width: 250px !important;
+}
 .el-menu {
     box-sizing: border-box;
 }
 .menu-box {
-    width: 250px;
     height: calc(100vh - 60px);
 }
 .el-main{
