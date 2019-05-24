@@ -18,7 +18,7 @@ Vue.use(ElementUI)
 //  异步请求前在header里加入token
 axios.interceptors.request.use(
   config => {
-    console.info(config)
+    console.info(222, config)
     if (config.url !== '/user/login' || config.url !== '/user/register') { // 如果是登录和注册操作，则不需要携带header里面的token
       if (localStorage.getItem('token')) {
         config.headers.Authorizatior = localStorage.getItem('token')

@@ -29,8 +29,8 @@ module.exports = [{
   id: 'data',
   icon: 'el-icon-pie-chart',
   sub: [{
-    name: '列表数据展示增删改查',
-    componentName: 'BasicLayout'
+    name: '学生入学管理',
+    componentName: 'student/StudentList'
   }, {
     name: 'Container 布局容器',
     componentName: 'BasicContainer'

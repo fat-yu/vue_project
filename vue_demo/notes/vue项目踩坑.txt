@@ -8,6 +8,10 @@ ssh-keygen -t rsa -C "youremail@example.com"
 添加远程仓库源
 git remote add origin git@github.com:fat-yu/vue_project.git
 
+清除多余的merge
+git rebase origin/master
+
+
 git init 
 git add .
 git status
