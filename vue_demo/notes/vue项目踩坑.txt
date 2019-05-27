@@ -11,6 +11,9 @@ git remote add origin git@github.com:fat-yu/vue_project.git
 清除多余的merge
 git rebase origin/master
 
+拉取或者提交时产生的冲突解决
+git merge -abort  // 中止合并
+rm .git/.MERGE_MSG.sw* //删除 vim 非正常关闭产生的文件
 
 git init 
 git add .
