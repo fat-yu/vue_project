@@ -1,12 +1,15 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
 import App from './App'
-import router from './router'
+import routes from './router/index.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/index.js' // 实例化store
 import axios from 'axios'
+// vue-router 路由配置
+import Vue from 'vue'
+import Router from 'vue-router'
+import Vuex from 'vuex'
 
 axios.defaults.timeout = 6000 // axios 设置全局超时时间
 axios.defaults.baseURL = 'http://localhost:3000/' // 设置baseURL后使用axios发送请求就不会是localhost:8080了
@@ -14,6 +17,7 @@ axios.defaults.baseURL = 'http://localhost:3000/' // 设置baseURL后使用axios
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(Router, Vuex)
 
 //  异步请求前在header里加入token
 axios.interceptors.request.use(
@@ -45,6 +49,27 @@ axios.interceptors.response.use(
     }
   }
 )
+
+const router = new Router({
+  routes: routes,
+  mode: 'history'
+})
+
+// 路由导航守卫
+// 注册全局钩子,用于拦截请求
+router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem('token')
+  if (to.path === '/login') {
+    localStorage.removeItem('token')
+    next()
+  } else {
+    if (token === '' || token === null) {
+      next('/login')
+    } else {
+      next()
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

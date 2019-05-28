@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const $sql = require('../sqlMap');
-const jwtUtil = require('../../src/utils/jwt.js')
+const jwtUtil = require('../../src/common/js/jwt.js')
 
 // 连接数据库
 const conn = mysql.createConnection(models.mysql);
@@ -76,7 +76,7 @@ router.post('/login', (req,res) => {
                     let _id = result[0].id
                     let jwtObj = new jwtUtil(_id)
                     let token = jwtObj.generateToken()
-                    res.send({code: 0, msg: '登录成功', token:token})
+                    res.send({code: 200, msg: '登录成功', token:token})
                 }
             }).catch((err) => {
                 res.send({code: 1, msg: '账号密码错误'})

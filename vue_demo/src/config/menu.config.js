@@ -1,38 +1,32 @@
 module.exports = [{
-  name: '首页',
-  id: 'Home',
-  icon: 'el-icon-s-home'
-}, {
-  name: '基础',
-  id: 'basic',
+  name: '导航一',
+  componentName: 'Index',
   icon: 'el-icon-s-data',
   sub: [{
-    name: 'Layout 布局',
-    componentName: 'BasicLayout'
+    name: '主页',
+    componentName: 'Home'
   }, {
-    name: 'Container 布局容器',
-    componentName: 'BasicContainer'
+    name: 'StudentList',
+    componentName: 'StudentList'
+  }, {
+    name: 'BasicLayout',
+    componentName: 'BasicLayout'
   }]
 }, {
-  name: 'Form',
-  id: 'form',
+  name: '导航二',
+  componentName: 'BasicContainer',
   icon: 'el-icon-folder-opened',
   sub: [{
-    name: 'Radio 单选框',
-    componentName: 'FormRadio'
+    name: '主页',
+    componentName: 'Home'
   }, {
-    name: 'Checkbox 多选框',
-    componentName: 'FormCheckbox'
-  }]
-}, {
-  name: '数据展示',
-  id: 'data',
-  icon: 'el-icon-pie-chart',
-  sub: [{
-    name: '学生入学管理',
-    componentName: 'student/StudentList'
+    name: 'Table',
+    componentName: 'container'
   }, {
-    name: 'Container 布局容器',
+    name: 'Form',
     componentName: 'BasicContainer'
+  }, {
+    name: '列表',
+    componentName: 'layout'
   }]
 }]
