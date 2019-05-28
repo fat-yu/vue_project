@@ -6,7 +6,7 @@
             </el-col>
             <el-col :span="10">
                 <div class="tools" @click.prevent="collapse">
-                    <i class="fa fa-align-justify"></i>
+                    <i class="el-icon-s-fold"></i>
                 </div>
             </el-col>
             <el-col :span="4" class="userinfo">
@@ -135,4 +135,117 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped>
+
+.container {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
+}
+.container .header {
+    height: 60px;
+    line-height: 60px;
+    background: #20a0ff;
+    color:#fff;
+}
+.container .header .tools{
+    padding: 0px 23px;
+    width:14px;
+    height: 60px;
+    line-height: 60px;
+    cursor: pointer;
+}
+.container .header .logo-collapse-width{
+    width:60px
+}
+.container .header .logo-width{
+    width:230px;
+}
+.container .header .userinfo {
+    text-align: right;
+    padding-right: 35px;
+    float: right;
+}
+.container .header .userinfo-inner {
+    cursor: pointer;
+    color:#fff;
+}
+.container .header .userinfo-inner img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 10px 0px 10px 10px;
+    float: right;
+}
+.container .header .logo {
+    height:60px;
+    font-size: 18px;
+    padding-left:20px;
+    padding-right:20px;
+    border-color: rgba(238,241,146,0.3);
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+.container .header .logo img {
+    width: 40px;
+    float: left;
+    margin: 10px 10px 10px 18px;
+}
+.container .header .logo .txt {
+    color:#fff;
+}
+.container .main {
+    display: flex;
+    position: absolute;
+    top: 60px;
+    bottom: 0px;
+    overflow: hidden;
+}
+.container .main .content-container {
+    flex:1;
+    overflow-y: scroll;
+    padding: 20px;
+}
+.container .main .content-container .content-wrapper {
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.container .main .content-container .breadcrumb-container .breadcrumb-inner{
+    float: right;
+}
+.container .main .content-container .breadcrumb-container .title {
+    width: 200px;
+    float: left;
+    color: #475669;
+}
+.container .main .menu-expanded{
+    flex:0 0 230px;
+    width: 230px;
+}
+.container .main .menu-collapsed{
+    flex:0 0 60px;
+    width: 60px;
+}
+.container .main aside {
+    flex:0 0 230px;
+    width: 230px;
+}
+.container .main aside .el-menu{
+    height: 100%;
+}
+.container .main aside .collapsed{
+    width:60px;
+}
+.container .main aside .collapsed .item{
+    position: relative;
+}
+.container .main aside .collapsed .submenu{
+    position:absolute;
+    top:0px;
+    left:60px;
+    z-index:99999;
+    height:auto;
+    display:none;
+}
+</style>

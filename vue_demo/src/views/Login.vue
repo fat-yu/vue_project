@@ -58,7 +58,6 @@ export default {
               })
             } else {
               _this.setToken({ token: token })
-              // 登录成功以后跳转框架页，同时加载首页
               this.$router.push({ path: '/table' })
             }
           })

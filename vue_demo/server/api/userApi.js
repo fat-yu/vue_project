@@ -79,7 +79,7 @@ router.post('/login', (req,res) => {
                     res.send({code: 200, msg: '登录成功', token:token})
                 }
             }).catch((err) => {
-                res.send({code: 1, msg: '账号密码错误'})
+                res.send({code: 2, msg: '账号密码错误'})
             })
         }
     }).catch((err) => {

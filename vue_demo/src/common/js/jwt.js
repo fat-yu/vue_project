@@ -11,7 +11,7 @@ class jwtObj {
     generateToken () {
         let data = this.data
         let created = Math.floor(Date.now() / 1000)
-        let cert = fs.readFileSync(path.join(__dirname, '../../rsa_key/rsa_private_key.pem'))
+        let cert = fs.readFileSync(path.join(__dirname, '../../../rsa_key/rsa_private_key.pem'))
         let token = jwt.sign({
             data,
             exp: created + 60 * 30
@@ -24,7 +24,7 @@ class jwtObj {
     // 校验token
     verifyToken () {
         let token = this.data
-        let cert = fs.readFileSync(path.join(__dirname, '../../rsa_key/rsa_public_key.pem'))
+        let cert = fs.readFileSync(path.join(__dirname, '../../../rsa_key/rsa_public_key.pem'))
         let res
         try {
             let result = jwt.verify(token, cert, {algorithm: ['RS256']}) || {}

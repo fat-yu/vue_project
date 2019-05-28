@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const jwtUtil = require('../src/common/js/jwt.js')
 
 app.use(cors());
 app.use(bodyParser.json());
