@@ -1,12 +1,12 @@
 <template>
     <el-row class="container">
         <el-col :span="24" class="header">
-            <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
+            <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'" v-show="!collapsed">
                 {{collapsed?'':sysName}}
             </el-col>
             <el-col :span="10">
                 <div class="tools" @click.prevent="collapse">
-                    <i class="el-icon-s-fold"></i>
+                    <i class="fa fa-bars icon-size"></i>
                 </div>
             </el-col>
             <el-col :span="4" class="userinfo">
@@ -23,21 +23,25 @@
         <el-col :span="24" class="main">
             <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
                 <!--导航菜单-->
-                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-                     unique-opened router v-show="!collapsed">
+                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect" unique-opened router :collapse="collapsed">
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
                         <el-submenu :index="index+''" v-if="!item.leaf" :key="index">
-                            <template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-                            <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
+                            <template slot="title">
+                                <i :class="item.iconCls"></i>
+                                <span slot="title" class="item-title" v-if="!collapsed">{{item.name}}</span>
+                            </template>
+                            <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">
+                                <span>{{child.name}}</span>
+                            </el-menu-item>
                         </el-submenu>
                         <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path" :key="item.children[0].path">
                             <i :class="item.iconCls"></i>
-                            <span>{{item.children[0].name}}</span>
+                            <span slot="title" class="item-title" v-if="!collapsed">{{item.children[0].name}}</span>
                         </el-menu-item>
                     </template>
                 </el-menu>
                 <!--导航菜单-折叠后-->
-                <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
+                <!-- <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
                     <li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" :key="index" class="el-submenu item">
                         <template v-if="!item.leaf">
                             <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
@@ -51,7 +55,7 @@
                             </li>
                         </template>
                     </li>
-                </ul>
+                </ul> -->
             </aside>
             <section class="content-container">
                 <div class="grid-content bg-purple-light">
@@ -136,7 +140,9 @@ export default {
 </script>
 
 <style scoped>
-
+.icon-size {
+    font-size: 20px;
+}
 .container {
     position: absolute;
     top: 0px;
@@ -150,17 +156,22 @@ export default {
     color:#fff;
 }
 .container .header .tools{
-    padding: 0px 23px;
-    width:14px;
-    height: 60px;
-    line-height: 60px;
+    margin: 15px;
+    width: 30px;
+    height: 30px;
+    line-height: 35px;
     cursor: pointer;
+    text-align: center;
 }
 .container .header .logo-collapse-width{
-    width:60px
+    width:60px;
+    transition: 1s;
+    opacity: 0.2;
 }
 .container .header .logo-width{
     width:230px;
+    transition: 1s;
+    opacity: 1;
 }
 .container .header .userinfo {
     text-align: right;
@@ -183,9 +194,6 @@ export default {
     font-size: 18px;
     padding-left:20px;
     padding-right:20px;
-    border-color: rgba(238,241,146,0.3);
-    border-right-width: 1px;
-    border-right-style: solid;
 }
 .container .header .logo img {
     width: 40px;
@@ -224,18 +232,27 @@ export default {
     width: 230px;
 }
 .container .main .menu-collapsed{
-    flex:0 0 60px;
-    width: 60px;
+    flex:0 0 65px;
+    width: 65px;
+}
+.item-title {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    padding-left: 20px;
+    transition: .2s;
+    box-sizing: border-box;
 }
 .container .main aside {
     flex:0 0 230px;
     width: 230px;
 }
 .container .main aside .el-menu{
+    width: 100%;
     height: 100%;
 }
 .container .main aside .collapsed{
-    width:60px;
+    width:65px;
 }
 .container .main aside .collapsed .item{
     position: relative;

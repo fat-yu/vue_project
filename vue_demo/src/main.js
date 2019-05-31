@@ -4,6 +4,7 @@ import App from './App.vue'
 import routes from './router/index.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'font-awesome/css/font-awesome.min.css'
 import store from './store/index.js' // 实例化store
 import axios from 'axios'
 // vue-router 路由配置

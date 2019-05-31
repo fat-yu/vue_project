@@ -58,7 +58,7 @@ export default {
               })
             } else {
               _this.setToken({ token: token })
-              this.$router.push({ path: '/table' })
+              this.$router.push({ path: '/main' })
             }
           })
         } else {
