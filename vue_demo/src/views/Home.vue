@@ -1,13 +1,14 @@
 <template>
+  <transition name="fade" mode="out-in">
     <el-row class="container">
         <el-col :span="24" class="header">
-            <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'" v-show="!collapsed">
-                {{collapsed?'':sysName}}
-            </el-col>
-            <el-col :span="10">
+            <el-col :span="1">
                 <div class="tools" @click.prevent="collapse">
                     <i class="fa fa-bars icon-size"></i>
                 </div>
+            </el-col>
+            <el-col :span="10" class="logo">
+                {{sysName}}
             </el-col>
             <el-col :span="4" class="userinfo">
                 <el-dropdown trigger="hover">
@@ -22,8 +23,8 @@
         </el-col>
         <el-col :span="24" class="main">
             <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
-                <!--导航菜单-->
-                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect" unique-opened router :collapse="collapsed">
+                <!-- 导航菜单 -->
+                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect" unique-opened router v-show="!collapsed"> <!--:collapsed="collapsed"  -->
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
                         <el-submenu :index="index+''" v-if="!item.leaf" :key="index">
                             <template slot="title">
@@ -41,21 +42,25 @@
                     </template>
                 </el-menu>
                 <!--导航菜单-折叠后-->
-                <!-- <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
+                <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
                     <li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" :key="index" class="el-submenu item">
-                        <template v-if="!item.leaf">
-                            <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
+                        <template v-if="!item.leaf && item.children.length > 0">
+                            <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
+                                <i :class="item.iconCls"></i>
+                            </div>
                             <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
+                                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">
+                                    <span slot="title" class="item-title" >{{child.name}}</span>
+                                </li>
                             </ul>
                         </template>
-                        <template v-else>
-                            <li class="el-submenu">
-                                <div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)"><i :class="item.iconCls"></i></div>
-                            </li>
+                        <template  v-if="item.leaf">
+                          <div class="el-submenu__title" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path ? 'is-active':''" @click="$router.push(item.children[0].path)">
+                                <i :class="item.iconCls"></i>
+                          </div>
                         </template>
                     </li>
-                </ul> -->
+                </ul>
             </aside>
             <section class="content-container">
                 <div class="grid-content bg-purple-light">
@@ -76,6 +81,7 @@
             </section>
         </el-col>
     </el-row>
+  </transition>
 </template>
 
 <script>
@@ -121,7 +127,7 @@ export default {
       }).catch(() => {})
     },
     // 折叠导航栏
-    collapse: function () {
+    collapse () {
       this.collapsed = !this.collapsed
     },
     showMenu (i, status) {
@@ -138,7 +144,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .icon-size {
     font-size: 20px;
@@ -165,12 +170,10 @@ export default {
 }
 .container .header .logo-collapse-width{
     width:60px;
-    transition: 1s;
     opacity: 0.2;
 }
 .container .header .logo-width{
     width:230px;
-    transition: 1s;
     opacity: 1;
 }
 .container .header .userinfo {
@@ -192,7 +195,6 @@ export default {
 .container .header .logo {
     height:60px;
     font-size: 18px;
-    padding-left:20px;
     padding-right:20px;
 }
 .container .header .logo img {
@@ -240,7 +242,6 @@ export default {
     height: 100%;
     display: inline-block;
     padding-left: 20px;
-    transition: .2s;
     box-sizing: border-box;
 }
 .container .main aside {
@@ -248,7 +249,7 @@ export default {
     width: 230px;
 }
 .container .main aside .el-menu{
-    width: 100%;
+    width: 100% !important;
     height: 100%;
 }
 .container .main aside .collapsed{
@@ -260,9 +261,17 @@ export default {
 .container .main aside .collapsed .submenu{
     position:absolute;
     top:0px;
-    left:60px;
+    left:65px;
     z-index:99999;
+    min-width: 210px;
     height:auto;
     display:none;
+    border: 1px solid #000;
+}
+.submenu li {
+    padding: 0;
+}
+.collapsed li {
+    text-align: center;
 }
 </style>

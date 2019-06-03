@@ -1,0 +1,18 @@
+@charset "utf-8"
+@font-face {
+    font-family: 'BaseFont';
+    src: url('../fonts/PingFangRegular.ttf') format('TrueType');
+}
+@font-face {
+    font-family: 'TitleFont';
+    src: url('../fonts/PingFangHeavy.ttf') format('TrueType');
+}
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: TitleFont, Microsoft YaHei, Tahoma;
+    box-sizing: border-box;
+    outline: none;
+    
+}

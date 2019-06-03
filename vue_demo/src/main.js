@@ -11,6 +11,8 @@ import axios from 'axios'
 import Vue from 'vue'
 import Router from 'vue-router'
 import Vuex from 'vuex'
+// 引入全局样式文件
+import './assets/css/style.css'
 
 axios.defaults.timeout = 6000 // axios 设置全局超时时间
 axios.defaults.baseURL = 'http://localhost:3000/' // 设置baseURL后使用axios发送请求就不会是localhost:8080了
