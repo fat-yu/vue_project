@@ -87,4 +87,23 @@ router.post('/login', (req,res) => {
     })
 });
 
+// 查询学生列表
+router.post('/listpage', (req, res) => {
+    let sql_name = $sql.user.userList
+    let params = req.body;
+    console.log(params);
+    new Promise ((resolve, reject) => {
+        conn.query(sql_name,params.name,function(err,result) {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(result)
+            }
+        })
+    }).then((result) => {
+        console.info(result)
+    }).catch((err) => {
+        res.send({code: 500, msg: '查询失败'})
+    })
+});
 module.exports = router;

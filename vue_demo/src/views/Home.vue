@@ -2,7 +2,7 @@
   <transition name="fade" mode="out-in">
     <el-row class="container">
         <el-col :span="24" class="header">
-            <el-col :span="1">
+            <el-col :span="2">
                 <div class="tools" @click.prevent="collapse">
                     <i class="fa fa-bars icon-size"></i>
                 </div>
@@ -24,7 +24,7 @@
         <el-col :span="24" class="main">
             <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
                 <!-- 导航菜单 -->
-                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect" unique-opened router v-show="!collapsed"> <!--:collapsed="collapsed"  -->
+                <el-menu :default-active="$route.path" class="el-menu-vertical-demo expanded" @open="handleopen" @close="handleclose" @select="handleselect" unique-opened router v-show="!collapsed"> <!--:collapsed="collapsed"  -->
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
                         <el-submenu :index="index+''" v-if="!item.leaf" :key="index">
                             <template slot="title">
@@ -88,10 +88,10 @@
 export default {
   data () {
     return {
-      sysName: '教务管理系统',
+      sysName: '',
       collapsed: false,
       sysUserName: '',
-      sysUserAvatar: '',
+      sysUserAvatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1560153562&di=f9eefca8976b83a8d6db85b2712077e1&imgtype=jpg&er=1&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201612%2F08%2F20161208204750_rS8N4.jpeg',
       form: {
         name: '',
         region: '',
@@ -264,14 +264,25 @@ export default {
     left:65px;
     z-index:99999;
     min-width: 210px;
-    height:auto;
+    height: auto;
     display:none;
-    border: 1px solid #000;
+    box-shadow: 0 0 10px rgba(0,0,0, .15);
+    border-radius: 4px;
 }
 .submenu li {
     padding: 0;
+    height: 56px;
+    line-height: 56px;
 }
-.collapsed li {
-    text-align: center;
+i {
+    font-size: 18px;
+}
+.submenu .el-menu-item:hover {
+    width: 210px;
+    padding-left: 2px;
+    transition: padding-left ease .5s;
+}
+.submenu .el-menu-item {
+    transition: padding-left ease .5s;
 }
 </style>

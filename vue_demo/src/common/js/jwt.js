@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const jwt = require('jsonwebtoken')
 
-class jwtObj {
+class JwtObj {
     constructor (data) {
         this.data = data
     }
@@ -26,8 +26,10 @@ class jwtObj {
         let token = this.data
         let cert = fs.readFileSync(path.join(__dirname, '../../../rsa_key/rsa_public_key.pem'))
         let res
+        console.info(1, this.data)
         try {
-            let result = jwt.verify(token, cert, {algorithm: ['RS256']}) || {}
+            let result = jwt.verify(token, cert, {algorithm: 'RS256'}) || {}
+            console.info(result)
             let {exp = 0} = result, current = Math.floor(Date.now() / 1000)
             if (current <= exp) {
                 res = result.data || {}
@@ -40,4 +42,4 @@ class jwtObj {
 }
 
 // 导出对象的方法： module.exports = {}
-module.exports = jwtObj
+module.exports = JwtObj
