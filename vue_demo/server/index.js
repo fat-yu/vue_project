@@ -31,15 +31,14 @@ app.all('*', function (req, res, next) {
 app.use((req, res, next) => {
     // 排除掉登录，注册的url
     if (req.url !== '/user/login' && req.url !== '/user/register') {
-        console.info('功能路径触发')
         // axios 发送请求的时候需要在头信息中带token
         let token = req.headers.authorizatior;
         let jwt = new jwtUtil(token);
         let result = jwt.verifyToken();
         // 如果考验通过就next，否则就返回登陆信息不正确
         if (result === 'error') {
-            res.send({status: 403, msg: '登录已过期,请重新登录'});
-            // res.render('login.html');
+            res.sendStatus(403);
+           // res.send({code: 403, msg: '登录已过期,请重新登录'});
         } else {
             next('/');
         }

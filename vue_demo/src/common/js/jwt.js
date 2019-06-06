@@ -14,7 +14,7 @@ class JwtObj {
         let cert = fs.readFileSync(path.join(__dirname, '../../../rsa_key/rsa_private_key.pem'))
         let token = jwt.sign({
             data,
-            exp: created + 60 * 30
+            exp: created + 60 * 10
         }, cert, {
             algorithm: 'RS256'
         })
@@ -26,10 +26,8 @@ class JwtObj {
         let token = this.data
         let cert = fs.readFileSync(path.join(__dirname, '../../../rsa_key/rsa_public_key.pem'))
         let res
-        console.info(1, this.data)
         try {
-            let result = jwt.verify(token, cert, {algorithm: 'RS256'}) || {}
-            console.info(result)
+            let result = jwt.verify(token, cert, {algorithm: ['RS256']}) || {}
             let {exp = 0} = result, current = Math.floor(Date.now() / 1000)
             if (current <= exp) {
                 res = result.data || {}
@@ -41,5 +39,4 @@ class JwtObj {
     }
 }
 
-// 导出对象的方法： module.exports = {}
 module.exports = JwtObj

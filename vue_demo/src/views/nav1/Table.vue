@@ -106,7 +106,7 @@
 
 <script>
 import util from '../../common/js/util'
-import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api'
+import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api.js'
 export default {
   data () {
     return {
@@ -168,9 +168,10 @@ export default {
       }
       this.listLoading = true
       getUserListPage(para).then((res) => {
-        this.total = res.data.total
-        this.users = res.data.users
-        this.listLoading = false
+        console.info(res)
+        // this.total = res.data.total
+        // this.users = res.data.users
+        // this.listLoading = false
       })
     },
     // 删除

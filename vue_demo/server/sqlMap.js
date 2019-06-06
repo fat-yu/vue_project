@@ -6,7 +6,7 @@ const sqlMap = {
         select_name: 'select * from user where username = ?',    //查询 username
         select_password: 'select * from user where password = ?',      //查询 password
         login: 'select count(*) from user where username = ? and password = ?',
-        userList:  'select * from student where student_name = ? '
+        userList:  'select * from student '
     }
 }
 
