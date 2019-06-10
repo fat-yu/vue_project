@@ -36,7 +36,7 @@
         <!--工具条-->
         <el-col :span="24" class="toolbar">
             <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="1" :total="total" style="float:right">
+            <el-pagination layout="prev, pager, next" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="1" :page-size="pagesizes" :total="total" style="float:right">
             </el-pagination>
         </el-col>
 
@@ -110,6 +110,7 @@ export default {
       users: [],
       total: 0,
       page: 1,
+      pagesizes: 2,
       listLoading: false,
       sels: [], // 列表选中列
       editFormVisible: false, // 编辑界面是否显示
@@ -145,6 +146,9 @@ export default {
       }
     }
   },
+  created () {
+    this.getUsers()
+  },
   methods: {
     // 性别显示转换
     formatSex: function (row, column) {
@@ -155,11 +159,17 @@ export default {
       this.page = val
       this.getUsers()
     },
+    handleSizeChange: function (size) {
+      this.pagesize = size
+      console.log(this.pagesize) // 每页下拉显示数据
+      this.getUsers()
+    },
     // 获取用户列表
     getUsers () {
       let para = {
         page: this.page,
-        name: this.filters.name
+        name: this.filters.name,
+        pagesizes: this.pagesizes
       }
       this.listLoading = true
       getUserListPage(para).then((res) => {

@@ -90,13 +90,18 @@ router.post('/login', (req,res) => {
 // 查询学生列表
 router.post('/listpage', (req, res) => {
     let sql_name = $sql.user.userList
-    let params = req.body;
+    let { page, name, pagesizes } = req.body.params
+
+    let pageSize = pagesizes ? pagesizes : 3
+    let currentPage = page ? page : 1
+
+    let queryParam = name === '' ? null : name
+
     new Promise ((resolve, reject) => {
-        if( params.params.name !== '' ) {
-            sql_name += " where student = ? "
+        if( queryParam !== '' && queryParam !== null ) {
+            sql_name += " where student_name = ? "
         }
-        let queryParam = params.params.name === '' ? null : params.params.name
-        conn.query(sql_name, params.params.name, function(err,result) {
+        conn.query(sql_name, queryParam, function(err,result) {
             if (err) {
                 reject(err)
             } else {
@@ -104,9 +109,28 @@ router.post('/listpage', (req, res) => {
             }
         })
     }).then((result) => {
-        res.send({code: 200, msg: '查询成功', studentList: result, total: result.length})
+        // 计算数据总条数
+        let total = result.length
+        // 分页条件 (跳过多少条)
+        let n = (currentPage - 1) * pageSize
+        // 拼接分页的sql语句
+        sql_name += ` limit ${n}, ${pageSize}`
+
+        new Promise ((resolve, reject) => {
+            conn.query(sql_name, queryParam, (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result)
+                }
+            })
+        }).then((result) => {
+            res.send({code: 200, msg: '查询成功', studentList: result, total: total})
+        }).catch((err) => {
+            res.send({code: 500, msg: '查询失败2'})
+        })
     }).catch((err) => {
-        res.send({code: 500, msg: '查询失败'})
+        res.send({code: 500, msg: '查询失败3'})
     })
 });
 module.exports = router;
