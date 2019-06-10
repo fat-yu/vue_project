@@ -91,15 +91,12 @@ router.post('/login', (req,res) => {
 router.post('/listpage', (req, res) => {
     let sql_name = $sql.user.userList
     let params = req.body;
-    console.info(params)
     new Promise ((resolve, reject) => {
         if( params.params.name !== '' ) {
             sql_name += " where student = ? "
         }
         let queryParam = params.params.name === '' ? null : params.params.name
         conn.query(sql_name, params.params.name, function(err,result) {
-            console.info(result)
-            console.info(err)
             if (err) {
                 reject(err)
             } else {
@@ -107,7 +104,7 @@ router.post('/listpage', (req, res) => {
             }
         })
     }).then((result) => {
-        console.info(result, 111)
+        res.send({code: 200, msg: '查询成功', studentList: result, total: result.length})
     }).catch((err) => {
         res.send({code: 500, msg: '查询失败'})
     })

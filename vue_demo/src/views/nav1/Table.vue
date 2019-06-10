@@ -16,22 +16,16 @@
         </el-col>
 
         <!--列表-->
-        <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%">
-            <el-table-column type="selection" width="55">
-            </el-table-column>
-            <el-table-column type="index" width="60">
-            </el-table-column>
-            <el-table-column prop="name" label="姓名" width="120" sortable>
-            </el-table-column>
-            <el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
-            </el-table-column>
-            <el-table-column prop="age" label="年龄" width="100" sortable>
-            </el-table-column>
-            <el-table-column prop="birth" label="生日" width="120" sortable>
-            </el-table-column>
-            <el-table-column prop="addr" label="地址" min-width="180" sortable>
-            </el-table-column>
-            <el-table-column label="操作" width="150">
+        <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%; height: 100%;">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column type="index" width="60"></el-table-column>
+            <el-table-column prop="student_name" label="姓名" width="120" sortable align="center"></el-table-column>
+            <el-table-column prop="student_sex" label="性别" width="100" :formatter="formatSex" sortable align="center"></el-table-column>
+            <el-table-column prop="student_age" label="年龄" width="100" sortable align="center"></el-table-column>
+            <el-table-column prop="student_no" label="学号" width="120" sortable align="center"></el-table-column>
+            <el-table-column prop="student_major" label="专业" min-width="180" sortable align="center"></el-table-column>
+            <el-table-column prop="student_status" label="学生状态" width="100" min-width="180" sortable align="center"></el-table-column>
+            <el-table-column label="操作" width="150" align="center">
                 <template slot-scope="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -42,7 +36,7 @@
         <!--工具条-->
         <el-col :span="24" class="toolbar">
             <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right">
+            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="1" :total="total" style="float:right">
             </el-pagination>
         </el-col>
 
@@ -154,7 +148,8 @@ export default {
   methods: {
     // 性别显示转换
     formatSex: function (row, column) {
-      return row.sex === 1 ? '男' : row.sex === 0 ? '女' : '未知'
+      console.info(row)
+      return row.student_sex === 1 ? '男' : row.student_sex === 0 ? '女' : '未知'
     },
     handleCurrentChange (val) {
       this.page = val
@@ -169,9 +164,9 @@ export default {
       this.listLoading = true
       getUserListPage(para).then((res) => {
         console.info(res)
-        // this.total = res.data.total
-        // this.users = res.data.users
-        // this.listLoading = false
+        this.total = res.data.total
+        this.users = res.data.studentList
+        this.listLoading = false
       })
     },
     // 删除

@@ -36,10 +36,10 @@ let routes = [
   {
     path: '/',
     component: Home,
-    name: '导航一',
-    iconCls: 'fa fa-home', // 图标样式class
+    name: '学生管理',
+    iconCls: 'fa fa-user', // 图标样式class
     children: [
-      { path: '/table', component: Table, name: 'Table' },
+      { path: '/student', component: Table, name: '学生列表' },
       { path: '/form', component: Form, name: 'Form' },
       { path: '/user', component: user, name: '列表' }
     ]
