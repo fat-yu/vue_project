@@ -27,11 +27,6 @@ app.all('*', function (req, res, next) {
 
 // 服务端拦截所有需要验证身份信息的请求，并校验token的合法性
 app.use('/*', (req, res, next) => {
-    console.info('进入拦截器.....')
-    console.info(req.url, "url")
-    console.info(req.originalUrl, "originalUrl")
-    console.info(req.baseUrl, "baseUrl")
-    console.info(req.path, "path")
     // 排除掉登录，注册的url
     if (req.baseUrl !== '/api/user/login' && req.baseUrl !== '/api/user/register') {
         // axios 发送请求的时候需要在头信息中带token
@@ -40,19 +35,16 @@ app.use('/*', (req, res, next) => {
         let result = jwt.verifyToken();
         // 如果考验通过就next，否则就返回登陆信息不正确
         if (result === 'error') {
-            console.info(result, 123)
-            // res.sendStatus(403);
             res.send({code: 403, msg: '登录已过期,请重新登录'});
         } else {
             next();
         }
     } else {
-        console.info('登录注册触发')
         next();
     }
 })
 
-// 后端api路由
+// 后端api路由，请求拦截一定要在路由前边，否则拦截不到请求
 app.use('/api/user', userApi);
 
 // 监听端口
