@@ -43,4 +43,5 @@ computed用来监控自己定义的变量，该变量不在data里面声明，�
 
 
 2019.06.13
-token 校验还是有问题
+token 校验还是有问题????解决！
+node后端的路由拦截和vue的路由拦截是一个道理，要在跳转前进行拦截，所以node后端的拦截要写在router之后，详见/server/index.js
