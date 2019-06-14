@@ -5,20 +5,18 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const jwtUtil = require('../src/common/js/jwt.js')
+const parseurl = require('parseurl')
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-// 后端api路由
-app.use('/api/user', userApi);
-
-// 解决跨域问题
+// 解决跨域问题 和 cors 二选一都可???
 app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Credentials", "true"); // 允许带cookie
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000/");
+    res.header("Access-Control-Allow-Origin", "*");
     if (req.method == 'OPTIONS') {
         res.send(200);
     }
@@ -28,25 +26,34 @@ app.all('*', function (req, res, next) {
 });
 
 // 服务端拦截所有需要验证身份信息的请求，并校验token的合法性
-app.use((req, res, next) => {
+app.use('/*', (req, res, next) => {
+    console.info('进入拦截器.....')
+    console.info(req.url, "url")
+    console.info(req.originalUrl, "originalUrl")
+    console.info(req.baseUrl, "baseUrl")
+    console.info(req.path, "path")
     // 排除掉登录，注册的url
-    if (req.url !== '/user/login' && req.url !== '/user/register') {
+    if (req.baseUrl !== '/api/user/login' && req.baseUrl !== '/api/user/register') {
         // axios 发送请求的时候需要在头信息中带token
         let token = req.headers.authorizatior;
         let jwt = new jwtUtil(token);
         let result = jwt.verifyToken();
         // 如果考验通过就next，否则就返回登陆信息不正确
         if (result === 'error') {
-            res.sendStatus(403);
-           // res.send({code: 403, msg: '登录已过期,请重新登录'});
+            console.info(result, 123)
+            // res.sendStatus(403);
+            res.send({code: 403, msg: '登录已过期,请重新登录'});
         } else {
-            next('/');
+            next();
         }
     } else {
         console.info('登录注册触发')
         next();
     }
 })
+
+// 后端api路由
+app.use('/api/user', userApi);
 
 // 监听端口
 app.listen(3000);

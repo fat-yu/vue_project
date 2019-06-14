@@ -57,6 +57,7 @@ export default {
       }
       this.loading = true
       getUserList(para).then((res) => {
+        console.info(res)
         this.users = res.data.users
         this.loading = false
       })

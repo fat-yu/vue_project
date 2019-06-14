@@ -16,6 +16,7 @@ const jsonWrite = function(res, ret) {
         res.send('ok')
     }
 };
+
 // 增加用户接口
 router.post('/addUser', (req, res) => {
     let sql_name = $sql.user.select_name
@@ -39,7 +40,6 @@ router.post('/addUser', (req, res) => {
             res.send('-1')    //当前注册username与数据库重复时，data返回-1
         }
     })
-    
 });
 
 // 登录接口
@@ -133,4 +133,10 @@ router.post('/listpage', (req, res) => {
         res.send({code: 500, msg: '查询失败3'})
     })
 });
+
+// 查询学生列表
+router.post('/listpage1', (req, res) => {
+    console.info(req.body.params)
+});
+
 module.exports = router;

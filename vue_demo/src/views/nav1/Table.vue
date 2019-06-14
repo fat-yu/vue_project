@@ -152,7 +152,6 @@ export default {
   methods: {
     // 性别显示转换
     formatSex: function (row, column) {
-      console.info(row)
       return row.student_sex === 1 ? '男' : row.student_sex === 0 ? '女' : '未知'
     },
     handleCurrentChange (val) {
@@ -161,7 +160,6 @@ export default {
     },
     handleSizeChange: function (size) {
       this.pagesize = size
-      console.log(this.pagesize) // 每页下拉显示数据
       this.getUsers()
     },
     // 获取用户列表
@@ -173,10 +171,17 @@ export default {
       }
       this.listLoading = true
       getUserListPage(para).then((res) => {
-        console.info(res)
-        this.total = res.data.total
-        this.users = res.data.studentList
-        this.listLoading = false
+        if (res.data.code !== 200) {
+          this.$message({
+            message: res.data.msg,
+            type: 'error'
+          })
+          this.$router.push({ path: '/login' })
+        } else {
+          this.total = res.data.total
+          this.users = res.data.studentList
+          this.listLoading = false
+        }
       })
     },
     // 删除

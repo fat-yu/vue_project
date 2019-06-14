@@ -4,7 +4,7 @@ let base = 'api'
 
 export const requestLogin = params => { return axios.post(`${base}/user/login`, params).then(res => res.data) }
 
-export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }) }
+export const getUserList = params => { return axios.post(`${base}/user/listpage1`, { params: params }) }
 
 export const getUserListPage = params => { return axios.post(`${base}/user/listpage`, { params: params }) }
 

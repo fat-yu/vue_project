@@ -14,7 +14,7 @@ import Vuex from 'vuex'
 // 引入全局样式文件
 import './assets/css/style.css'
 
-axios.defaults.timeout = 6000000 // axios 设置全局超时时间
+axios.defaults.timeout = 6000 // axios 设置全局超时时间
 axios.defaults.baseURL = 'http://localhost:3000/' // 设置baseURL后使用axios发送请求就不会是localhost:8080了
 
 Vue.prototype.$axios = axios
@@ -39,11 +39,9 @@ axios.interceptors.request.use(
 // 异步请求后，判断token是否过期
 axios.interceptors.response.use(
   response => {
-    console.info(response, 'res')
     return response
   },
   error => {
-    console.info(error.response, 'err')
     if (error.response) {
       switch (error.response.status) {
         case 403:
