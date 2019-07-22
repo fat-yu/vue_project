@@ -95,11 +95,12 @@ router.post('/listpage', (req, res) => {
     let pageSize = pagesizes ? pagesizes : 3
     let currentPage = page ? page : 1
 
-    let queryParam = name === '' ? null : name
+    // nodejs模糊查询mysql 参数不能带单引号
+    let queryParam = name === '' ? null : "%" +name+ "%"
 
     new Promise ((resolve, reject) => {
         if( queryParam !== '' && queryParam !== null ) {
-            sql_name += " where student_name = ? "
+            sql_name += " where student_name like ? "
         }
         conn.query(sql_name, queryParam, function(err,result) {
             if (err) {
@@ -112,6 +113,9 @@ router.post('/listpage', (req, res) => {
         // 计算数据总条数
         let total = result.length
         // 分页条件 (跳过多少条)
+        if(queryParam !== null){
+            currentPage = 1
+        }
         let n = (currentPage - 1) * pageSize
         // 拼接分页的sql语句
         sql_name += ` limit ${n}, ${pageSize}`
@@ -127,16 +131,34 @@ router.post('/listpage', (req, res) => {
         }).then((result) => {
             res.send({code: 200, msg: '查询成功', studentList: result, total: total})
         }).catch((err) => {
-            res.send({code: 500, msg: '查询失败2'})
+            res.send({code: 500, msg: '查询失败'})
         })
     }).catch((err) => {
-        res.send({code: 500, msg: '查询失败3'})
+        res.send({code: 500, msg: '查询失败'})
     })
 });
 
-// 查询学生列表
-router.post('/listpage1', (req, res) => {
-    console.info(req.body.params)
+// 新增编辑功能的保存
+router.post('/edit', (req, res) => {
+    let sql = $sql.user.update_student
+
+    let o = req.body.params
+    let params = [o.student_name, o.student_sex, o.student_age, o.student_no, o.student_major, o.student_status, o.student_id]
+
+    new Promise((resolve, reject) => {
+        conn.query(sql, params, (err, result)=>{
+            if (err) {
+                reject(err)
+            } else {
+                resolve(result)
+            }
+        })
+    }).then((result)=>{
+        res.send({code: 200, msg: '更新成功'})
+    }).catch((err)=>{
+        console.info(err)
+        res.send({code: 500, msg: '更新失败'})
+    })
 });
 
 module.exports = router;
