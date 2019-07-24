@@ -1,20 +1,18 @@
 <template>
     <section class="chart-container">
         <el-row>
-            <el-col :span="12">
-                <div id="chartColumn" style="width:100%; height:400px;"></div>
-            </el-col>
-            <el-col :span="12">
-                <div id="chartBar" style="width:100%; height:400px;"></div>
-            </el-col>
-            <el-col :span="12">
+            <el-col :span="24">
                 <div id="chartLine" style="width:100%; height:400px;"></div>
             </el-col>
-            <el-col :span="12">
-                <div id="chartPie" style="width:100%; height:400px;"></div>
-            </el-col>
+        </el-row>
+        <el-row>
             <el-col :span="24">
-                <a href="http://echarts.baidu.com/examples.html" target="_blank" style="float: right;">more>></a>
+                <div id="chartBar" style="width:100%; height:400px;"></div>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="24">
+                <a href="http://echarts.baidu.com/examples.html" target="_blank" class="btn">echarts官网</a>
             </el-col>
         </el-row>
     </section>
@@ -22,174 +20,87 @@
 
 <script>
 import echarts from 'echarts'
+import baseOptions from '../../assets/js/e-option-lib.js'
+import commonjs from '../../assets/js/commonjs.y.js'
 export default {
   data () {
     return {
-      chartColumn: null,
-      chartBar: null,
-      chartLine: null,
-      chartPie: null
+      echartsBox: {
+        myChartLine: null,
+        myChartBar: null
+      },
+      echartsOption: {
+        optionBar: null,
+        optionLine: null
+      }
     }
   },
   methods: {
-    drawColumnChart () {
-      this.chartColumn = echarts.init(document.getElementById('chartColumn'))
-      this.chartColumn.setOption({
-        title: { text: 'Column Chart' },
-        tooltip: {},
-        xAxis: {
-          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-        },
-        yAxis: {},
-        series: [{
-          name: '销量',
-          type: 'bar',
-          data: [5, 20, 36, 10, 10, 20]
-        }]
-      })
-    },
     drawBarChart () {
-      this.chartBar = echarts.init(document.getElementById('chartBar'))
-      this.chartBar.setOption({
-        title: {
-          text: 'Bar Chart',
-          subtext: '数据来自网络'
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow'
-          }
-        },
-        legend: {
-          data: ['2011年', '2012年']
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'value',
-          boundaryGap: [0, 0.01]
-        },
-        yAxis: {
-          type: 'category',
-          data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
-        },
-        series: [
-          {
-            name: '2011年',
-            type: 'bar',
-            data: [18203, 23489, 29034, 104970, 131744, 630230]
-          },
-          {
-            name: '2012年',
-            type: 'bar',
-            data: [19325, 23438, 31000, 121594, 134141, 681807]
-          }
-        ]
-      })
+      this.echartsBox.myChartBar = echarts.init(document.getElementById('chartBar'))
+      this.echartsBox.myChartBar.clear()
+      let xAxisDataBar = []
+      for (let i = 1; i < 32; i++) {
+        xAxisDataBar.push(i)
+      }
+      let xAxisBar = baseOptions.axis.xAxis('category', 10, 12, xAxisDataBar, true)
+      let yAxisBar = baseOptions.axis.yAxis('kW', 3)
+      let legendBar = baseOptions.legend(20)
+      let gridBar = baseOptions.grid(35, 10, 20, 40)
+      this.echartsOption.optionBar = {
+        legend: legendBar,
+        grid: gridBar,
+        xAxis: xAxisBar,
+        yAxis: yAxisBar,
+        series: []
+      }
+      let seriesBar = baseOptions.series.bar('本月用电量', 12, 0, '0, 155, 235', true)
+      let seriesBar2 = baseOptions.series.bar('上月用电量', 12, 0, '255, 125, 135', true)
+      for (let i = 0; i < 31; i++) {
+        seriesBar.data.push(Math.random() * 100)
+        seriesBar2.data.push(Math.random() * 100)
+      }
+      this.echartsOption.optionBar.series.push(seriesBar)
+      this.echartsOption.optionBar.series.push(seriesBar2)
+      this.echartsBox.myChartBar.setOption(this.echartsOption.optionBar)
     },
     drawLineChart () {
-      this.chartLine = echarts.init(document.getElementById('chartLine'))
-      this.chartLine.setOption({
-        title: {
-          text: 'Line Chart'
-        },
-        tooltip: {
-          trigger: 'axis'
-        },
-        legend: {
-          data: ['邮件营销', '联盟广告', '搜索引擎']
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [
-          {
-            name: '邮件营销',
-            type: 'line',
-            stack: '总量',
-            data: [120, 132, 101, 134, 90, 230, 210]
-          },
-          {
-            name: '联盟广告',
-            type: 'line',
-            stack: '总量',
-            data: [220, 182, 191, 234, 290, 330, 310]
-          },
-          {
-            name: '搜索引擎',
-            type: 'line',
-            stack: '总量',
-            data: [820, 932, 901, 934, 1290, 1330, 1320]
-          }
-        ]
-      })
-    },
-    drawPieChart () {
-      this.chartPie = echarts.init(document.getElementById('chartPie'))
-      this.chartPie.setOption({
-        title: {
-          text: 'Pie Chart',
-          subtext: '纯属虚构',
-          x: 'center'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        legend: {
-          orient: 'vertical',
-          left: 'left',
-          data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-        },
-        series: [
-          {
-            name: '访问来源',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: [
-              { value: 335, name: '直接访问' },
-              { value: 310, name: '邮件营销' },
-              { value: 234, name: '联盟广告' },
-              { value: 135, name: '视频广告' },
-              { value: 1548, name: '搜索引擎' }
-            ],
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }
-        ]
-      })
+      this.echartsBox.myChartLine = echarts.init(document.getElementById('chartLine'))
+      this.echartsBox.myChartLine.clear()
+      let xAxisData = commonjs.splitDate()
+      let xAxis = baseOptions.axis.xAxis('category', 10, 12, xAxisData, false)
+      let yAxis = baseOptions.axis.yAxis('kW', 5)
+      let legend = baseOptions.legend(20)
+      let grid = baseOptions.grid(35, 10, 20, 40)
+      this.echartsOption.optionLine = {
+        legend: legend,
+        grid: grid,
+        xAxis: xAxis,
+        yAxis: yAxis,
+        series: []
+      }
+      let series1 = baseOptions.series.line('今日负荷', 5, true, 1, '50, 222, 180', true, false)
+      let series2 = baseOptions.series.line('昨日负荷', 5, true, 1, '250, 210, 25', true, false)
+      for (let i = 0; i < 12; i++) {
+        series1.data.push(Math.random() * 100)
+        series2.data.push(Math.random() * 100)
+      }
+      this.echartsOption.optionLine.series.push(series1)
+      this.echartsOption.optionLine.series.push(series2)
+      this.echartsBox.myChartLine.setOption(this.echartsOption.optionLine)
     },
     drawCharts () {
-      this.drawColumnChart()
       this.drawBarChart()
       this.drawLineChart()
-      this.drawPieChart()
     }
   },
   mounted: function () {
     this.drawCharts()
+    // 窗口变化事件挂载到mounted
+    window.onresize = () => {
+      this.echartsBox.myChartLine.resize()
+      this.echartsBox.myChartBar.resize()
+    }
   },
   updated: function () {
     this.drawCharts()
@@ -204,5 +115,16 @@ export default {
 }
 .el-col {
     padding: 30px 20px;
+}
+.btn {
+  display: block;
+  widows: 150px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  background-color: #409eff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
 }
 </style>

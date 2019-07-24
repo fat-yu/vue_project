@@ -1,4 +1,20 @@
-
+/**
+ * 模拟Array对象的splice方法
+ * @Author   yuzhiyong
+ * @DateTime 2019-01-24T11:23:37+0800
+ * @param    {{要删除的元素下标}}
+ * @param    {[int]}                 delIndex [要删除的元素下标]
+ * @return   {[arr]}                          [description]
+ */
+Array.prototype.delete=function(delIndex){
+    var temArray=[];
+    for(var i=0;i<this.length;i++){
+        if(i!=delIndex){
+            temArray.push(this[i]);
+        }
+    }
+    return temArray;
+}
 /**
  *  获取最值
  *  */
