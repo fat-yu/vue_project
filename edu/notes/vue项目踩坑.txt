@@ -1,0 +1,47 @@
+﻿git
+git config --global user.name ''
+git config --global user.mail ''
+
+ssh-keygen -t rsa -C "youremail@example.com"
+生成的rsa在github配置一下即可
+
+添加远程仓库源
+git remote add origin git@github.com:fat-yu/vue_project.git
+
+清除多余的merge
+git rebase origin/master
+
+拉取或者提交时产生的冲突解决
+git merge -abort  // 中止合并
+rm .git/.MERGE_MSG.sw* //删除 vim 非正常关闭产生的文件
+
+git init 
+git add .
+git status
+git commit -m '注释'
+git push origin master
+git pull origin master
+
+
+vue项目引入jquery后webpack.base.conf.js中修改了相关配置，npm run dev仍然提示 http://eslint.org/docs/rules/no-undef '$' is not defined
+
+是因为启用了eslint检查，这个时候需要在exlintrc.js中env节点增加 jquery: true
+
+npm安装包的时候出现以下报错，是因为npm新旧版本的安装方式不一样，删掉已经安装的包重新 npm install 即可
+npm ERR! errno: -4048, 
+npm ERR! code: ‘EPERM’, 
+npm ERR! syscall: ‘scandir’
+
+
+watch主要用于监控vue实例的变化，它监控的变量当然必须在data里面声明才可以，它可以监控一个变量，也可以是一个对象
+watch一般用于监控路由、input输入框的值特殊处理等等， 场景是一个数据影响多个数据
+
+computed用来监控自己定义的变量，该变量不在data里面声明，直接在computed里面定义，然后就可以在页面上进行双向数据绑定展示出结果或者用作其他处理
+
+2019.05.16
+路由嵌套后，对应的写法也需要调整，这样指定的router就会在指定的view中显示
+
+
+2019.06.13
+token 校验还是有问题????解决！
+node后端的路由拦截和vue的路由拦截是一个道理，要在跳转前进行拦截，所以node后端的拦截要写在router之后，详见/server/index.js

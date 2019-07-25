@@ -1,0 +1,41 @@
+2019.05.16
+Vue 全局钩子函数：三大类钩子，两种函数
+    1. 全局钩子
+    2. 某路由钩子
+    3. 组件内钩子
+
+    1. Vue.beforeEach((to,from,next) => {}) // 跳转前执行
+    2. Vue.afterEach((to,from) => {}) // 在跳转之后判断
+
+router.beforeEach来实现拦截登陆，在需要拦截的router的meta中加入requireAuth，用来验证是否需要登录
+
+2019.05.17
+全局引用axios，在main.js
+import axios from 'axios'
+Vue.prototype.$axios = axios
+
+启动node服务需要进入到项目的server文件夹下，执行node index
+
+axios.defaults.baseURL = 'http://localhost:3000/' // 设置baseURL后使用axios发送请求就不会是localhost:8080了
+
+解决使用axios发送请求产生的跨域问题：
+在server（服务端）的index的中设置头信息，不足以解决问题，需要安装 npm install cors --save 才能生效
+
+
+2019.05.21
+node+jwt 搭建token验证的服务端
+fs模块，文件操作模块
+jwt模块，jsonwebtoken
+
+在基于token的认证，token通过请求头传输，而不是把认证信息存储在session或者cookie中。这意味着无状态。你可以从任意一种可以发送HTTP请求的终端向服务器发送请求。
+可以避免CSRF攻击
+当在应用中进行 session的读，写或者删除操作时，会有一个文件操作发生在操作系统的temp 文件夹下，至少在第一次时。假设有多台服务器并且 session 在第一台服务上创建。当你再次发送请求并且这个请求落在另一台服务器上，session 信息并不存在并且会获得一个“未认证”的响应。我知道，你可以通过一个粘性 session 解决这个问题。然而，在基于 token 的认证中，这个问题很自然就被解决了。没有粘性 session 的问题，因为在每个发送到服务器的请求中这个请求的 token 都会被拦截。
+
+
+使用openssl生成公钥私钥，用于生成token
+私钥：openssl genrsa -out rsa_private_key.pem 1024
+公钥：
+
+// 导出对象的方法： module.exports = {}
+
+***************** 深入学习一下Promise
