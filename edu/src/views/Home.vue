@@ -39,9 +39,9 @@
 .icon-box { width: 150px; height: 150px; background-color: #fff; position: relative; bottom: 40px;}
 .icon-box img { width: 130px; height: 130px; margin: 10px; }
 .login-info>div:nth-child(2), .login-info>div:nth-child(3) { width: 192px; height: 50%; position: absolute; right: 0; text-indent: 1rem;}
-.name-box {  top: 0; line-height: 100px; font-size: 1.5rem;}
-.major-box { top: 65px; line-height: 30px; color: #999;}
-.params-item { width: 114px; height: inherit; line-height: 130px; font-size: 2.5rem; color: #3399cc; opacity: .85; text-align: center; position: relative;}
+.name-box {  top: 0; line-height: 100px; font-size: 3vmin;}
+.major-box { top: 65px; line-height: 30px; color: #999; font-size: 1.5vmin;}
+.params-item { width: 114px; height: inherit; line-height: 130px; font-size: 5vmin; font-family: initial; color: #3399cc; opacity: .85; text-align: center; position: relative;}
 .params-item:nth-child(1)::after { content: '本次平均分'; display: block; width: 100%; height: 30px; font-size: 12px; position: absolute; bottom: 20px; line-height: 30px; color: #999; }
 .params-item:nth-child(2)::after { content: '本次最高分'; display: block; width: 100%; height: 30px; font-size: 12px; position: absolute; bottom: 20px; line-height: 30px; color: #999; }
 .params-item:nth-child(3)::after { content: '班级排名'; display: block; width: 100%; height: 30px; font-size: 12px; position: absolute; bottom: 20px; line-height: 30px; color: #999;}
